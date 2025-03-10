@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: movies
+  datasource:
+    url: jdbc:mysql://localhost:3306/movies
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size:  500MB
+      max-request-size: 500MB
+server:
+  port: 8080
+api:
+  version: v1
+  path: /api/${api.version}
+jwt:
+  signer-key: "WfXM3f5wAl0EcR7ycKW9miFDANPfRpPAWUOnYq6Ezqi0G/SYHGelmxDAC85HeknO"

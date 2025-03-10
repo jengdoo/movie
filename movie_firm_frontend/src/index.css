@@ -1,0 +1,77 @@
+:root {
+  /* Font */
+  font-family: "Poppins", Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Theme colors */
+  color: #fff;
+  background-color: #000;
+  /* Nền tối cho giao diện phim */
+
+  /* Smoothing */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links */
+a {
+  font-weight: 500;
+  color: #ffe77d; /* Màu vàng */
+  text-decoration: none;
+}
+a:hover {
+  color: #ffd700; /* Vàng sáng hơn */
+}
+
+/* Body */
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 100vh;
+  /* background-color: #000;  */
+  /* Đảm bảo nền luôn là màu đen */
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  color: #ffe77d;
+  margin: 0;
+}
+
+/* Buttons */
+button {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #9f22d6; /* Màu tím */
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background-color: #531374;
+  border-color: #ffe77d;
+}
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+}

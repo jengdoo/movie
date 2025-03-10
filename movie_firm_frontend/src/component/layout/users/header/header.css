@@ -1,0 +1,95 @@
+.header-container {
+  width: 100%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(34, 34, 34, 0.9));
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Mặc định ẩn menu icon */
+.menu-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Ẩn user icon trong menu mặc định */
+.mobile-user {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: #222;
+    padding: 10px 0;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  /* Hiển thị menu icon */
+  .menu-icon {
+    display: block;
+  }
+
+  /* Ẩn user icon bên ngoài menu khi responsive */
+  .desktop-user {
+    display: none;
+  }
+
+  /* Hiển thị user icon bên trong menu */
+  .mobile-user {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+}
