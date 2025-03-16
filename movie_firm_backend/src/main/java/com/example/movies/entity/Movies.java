@@ -56,9 +56,8 @@ public class Movies {
     private Integer views;
     @Column(name = "created_at")
     private Instant createdAt;
-    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Episodes> episodes;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Episodes> episodes;
     @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<UserMovies> userMovies;
     @ManyToOne()

@@ -25,6 +25,7 @@ public class LoyaltyTransactions {
     @Column(name = "points")
     private Integer points;
     @Column(name = "transaction_type")
+    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     @Column(name = "description")
     private String description;

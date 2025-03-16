@@ -20,6 +20,8 @@ public class Invoices {
     @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+    @Column(name = "code")
+    private String code;
     @Column(name = "total_amount")
     private Double totalAmount;
     @Column(name = "created_at")

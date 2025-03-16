@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.time.Instant;
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponse createUser(UserRegisterRequest userRegisterRequest) {
         if (userRepository.existsByUsername(userRegisterRequest.getUsername())) {
             throw new RuntimeException("username already exists");
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponse updateUser(Long id, UserRegisterRequest userRegisterRequest) {
         User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("not found user with id " + id));
         user.setUsername(userRegisterRequest.getUsername());

@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MoviesRepository extends JpaRepository<Movies, Integer> {
+public interface MoviesRepository extends JpaRepository<Movies, Long> {
     List<Movies> id(Long id);
 
     Optional<Movies> findById(Long id);
+
 
 }
