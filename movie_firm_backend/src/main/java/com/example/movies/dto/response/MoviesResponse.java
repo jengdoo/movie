@@ -8,6 +8,8 @@ import lombok.Getter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @Getter
@@ -29,9 +31,10 @@ public class MoviesResponse {
     private String director;
     private Integer duration;
     private Integer views;
-    private Instant createdAt;
+    private String createdAt;
 
     public static MoviesResponse convertMoviesToMoviesResponse(Movies movies) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
         return MoviesResponse.builder()
                 .id(movies.getId())
                 .title(movies.getTitle())
@@ -48,7 +51,7 @@ public class MoviesResponse {
                 .director(movies.getDirector())
                 .duration(movies.getDuration())
                 .views(movies.getViews())
-                .createdAt(movies.getCreatedAt())
+                .createdAt(movies.getCreatedAt()!=null?movies.getCreatedAt().atZone(ZoneOffset.UTC).format(formatter):null)
                 .build();
     }
 }

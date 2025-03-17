@@ -24,7 +24,7 @@ public class MoviesRequest {
     private String description;
     private String genre;
     @Min(value = 0, message = "Rating must be at least 0")
-    @Max(value = 10, message = "Rating must not exceed 10")
+    @Max(value = 5, message = "Rating must not exceed 10")
     private Integer rating;
     private String thumbnailUrl;
     @NotNull(message = "Type is required")

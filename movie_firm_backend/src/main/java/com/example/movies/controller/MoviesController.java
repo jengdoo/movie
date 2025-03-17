@@ -6,6 +6,7 @@ import com.example.movies.service.MoviesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,18 @@ import java.util.List;
 @RequestMapping("${api.path}/movies")
 public class MoviesController {
     private final MoviesService moviesService;
+    @GetMapping("")
+    public ResponseEntity<?> pageAllMovies(@RequestParam(name = "pageNumber",defaultValue = "1") int pageNumber,
+                                           @RequestParam(name = "pageSize",defaultValue = "10") int pageSize) {
+        if (pageNumber < 1) {
+            return ResponseEntity.badRequest().body("Page number must be >= 0");
+        }
+        if (pageSize <= 0) {
+            return ResponseEntity.badRequest().body("Page size must be > 0");
+        }
+        Page<MoviesResponse> moviesResponses = moviesService.pageMovies(pageNumber-1,pageSize);
+        return ResponseEntity.ok(moviesResponses);
+    }
     @GetMapping("/list")
     public ResponseEntity<?> getAllMovies() {
         List<MoviesResponse> moviesResponses = moviesService.getALlMovies();

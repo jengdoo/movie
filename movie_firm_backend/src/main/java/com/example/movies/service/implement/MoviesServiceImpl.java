@@ -11,6 +11,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +37,14 @@ public class MoviesServiceImpl implements MoviesService {
     private final MoviesRepository moviesRepository;
 
     private final Cloudinary cloudinary;
+
+    @Override
+    public Page<MoviesResponse> pageMovies(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Movies> movies = moviesRepository.findAll(pageable);
+        return movies.map(MoviesResponse::convertMoviesToMoviesResponse);
+    }
+
     @Override
     public List<MoviesResponse> getALlMovies() {
         List<Movies> movies = moviesRepository.findAll();
@@ -47,17 +59,17 @@ public class MoviesServiceImpl implements MoviesService {
                         .title(moviesRequest.getTitle())
                         .description(moviesRequest.getDescription())
                         .genre(moviesRequest.getGenre())
-                        .rating(moviesRequest.getRating())
+                        .rating(moviesRequest.getRating()!=null?moviesRequest.getRating():0)
                         .thumbnailUrl(moviesRequest.getThumbnailUrl())
                         .type(moviesRequest.getType())
-                        .isFree(moviesRequest.getIsFree())
-                        .price(moviesRequest.getPrice())
+                        .isFree(moviesRequest.getIsFree()!=null?moviesRequest.getIsFree():false)
+                        .price(moviesRequest.getPrice()!=null?moviesRequest.getPrice():0)
                         .discountPercent(moviesRequest.getDiscountPercent())
                         .discountExpiry(moviesRequest.getDiscountExpiry())
                         .releaseDate(moviesRequest.getReleaseDate())
                         .director(moviesRequest.getDirector())
-                        .duration(moviesRequest.getDuration())
-                        .views(moviesRequest.getViews())
+                        .duration(moviesRequest.getDuration()!=null?moviesRequest.getDuration():0)
+                        .views(0)
                         .createdAt(Instant.now())
                         .build()
         );

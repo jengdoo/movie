@@ -10,12 +10,14 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
     private final String[] PUBLIC_ENDPOINT = {"/api/v1/user/login"
             ,"/api/v1/user/register"
             ,"/api/v1/user/introspect"
@@ -26,6 +28,7 @@ public class SecurityConfig {
             ,"/api/v1/payments/**"
             ,"/api/v1/voucher/**"
             ,"/api/v1/promotion/**"
+            ,"/api/v1/movies/**"
     };
     @Value("${jwt.signer-key}")
    private String signerKey;
@@ -44,10 +47,26 @@ public class SecurityConfig {
     }
     @Bean
     JwtDecoder jwtDecoder() {
+        if (signerKey == null || signerKey.isBlank()) {
+            throw new IllegalArgumentException("JWT signer key must not be null or empty");
+        }
         SecretKeySpec signingKey = new SecretKeySpec(signerKey.getBytes(), "HS512");
         return NimbusJwtDecoder
                 .withSecretKey(signingKey)
                 .macAlgorithm(MacAlgorithm.HS512)
                 .build();
+    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/v1/**") // Chỉ áp dụng cho API có "/api/v1/"
+                        .allowedOrigins("http://localhost:5173") // Cho phép React frontend gọi API
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Các method được phép
+                        .allowedHeaders("*") // Cho phép mọi header
+                        .allowCredentials(true); // Cho phép gửi cookies nếu cần
+            }
+        };
     }
 }
